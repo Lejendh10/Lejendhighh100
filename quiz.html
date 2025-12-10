@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Self-Assessment Quiz</title>
+        <!--Links to the main stylesheet-->
+        <link rel="stylesheet" href="styles.css">
+        </head>
+        <body>
+            <header>
+                <div class="container header-content">
+                    <div class="logo">Lejends</div>
+                    <nav>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="early-browsers.html">Early Browsers</a></li>
+                            <li><a href="key-concepts.html">Key Concepts</a></li>
+                            <li><a href="modern-browsers.html">Modern Browsers</a></li>
+                            <li><a href="resources.html">Resources</a></li>
+                            <li><a href="quiz.html" class="active">Self-Assessment Quiz</a></li>
+                            <li><a href="about.html">About</a></li>
+                        </ul>
+                    </nav>
+                 </div>
+             </header>
+
+             <main>
+                <div class="container">
+                  <div class="page-header">
+                    <h1>Web Browser Evolution Quiz</h1>
+                    <p class="subtitle">Test your understanding of the materials!</p>
+                  </div>
+                  
+                  <div class="quiz-container">
+                    <form id="assessmentQuiz">
+
+                        <!-- Question 1: Fill in the blank -->
+                         <div class="question-block" data-question-id="q1">
+                            <h3>1. (Fill-in-the-blank) The component of a web browser responsible for displaying web content is called the _____________.</h3>
+                            <div class="input-group">
+                                <input type="text" id="q1_input" name="qi_input" placeholder="Enter your answer here" required>
+                            </div>
+                         </div>
+                    
+                        <!-- Question 2: Multiple Choice (Q2) -->
+                         <div class="question-block" data-question-id="q2">
+                            <h3>1. (Multiple Choice) What was the first graphical web browser that popularized the World Wide Web?</h3>
+                            <div class="input-group">
+                                <label><input type="radio" name="q2_choice" value="a"> WorldWideWeb</label>
+                                <label><input type="radio" name="q2_choice" value="b"> Mosaic</label>
+                                <label><input type="radio" name="q2_choice" value="c"> Netscape Navigator</label>
+                                <label><input type="radio" name="q2_choice" value="d"> Internet Explorer</label>
+                             </div>
+                          </div>
+
+                        <!--Question 3: Multiple Choice (Q3)-->
+                        <div class="question-block" data-question-id="q3">
+                      <h3>3. (Multiple Choice) Which company initally developed the JavaScript V8 Engine?</h3>             <div class="input-group">
+                            <label><input type="radio" name="q3_choice" value="a"> Mozilla Foundation</label>
+                            <label><input type="radio" name="q3_choice" value="b"> Apple </label>
+                            <label><input type="radio" name="q3_choice" value="c"> Microsoft</label>
+                            <label><input type="radio" name="q3_choice" value="d"> Google </label>
+                         </div>
+                     </div>
+
+                     <!--Question 4: Multiple Choice (Q4)-->
+                     <div class="question-block" data-question-id="q3">
+                     <h3>4. (Multiple Choice) Which of these browser wars took place in the late 1990s between Netscape Navigator and Internet Explorer
+                        <div class="input-group">
+                            <label><input type="radio" name="q4_choice" value="a">  The first broswser war  </label>
+                            <label><input type="radio" name="q4_choice" value="b"> The Second Browser War </label>
+                            <label><input type="radio" name="q4_choice" value="c"> The Cold Web war </label>
+                            <label><input type="radio" name="q4_choice" value="d"> The Great Web Expansion</label>   
+                         </div>
+                     </div>
+                  
+                     <div class="question-block" data-question-id="q5">
+                        <h3>5.(Multi-Select) Select all of the following that are discussed as core Browser Security Features:</h3>
+                         <p class="subtitle">(Select all correct options)</p> 
+                         <div class="input-group">
+                            <label><input type="checkbox" name="q5_multichoice" value="sandboxing"> Sandboxing</label>
+                            <label><input type="checkbox" name="q5_multichoice" value="responsive"> Responsive Design</label>
+                            <label><input type="checkbox" name="q5_multichoice" value="sameorgin"> Same-Orgin Policy</label>
+                            <label><input type="checkbox" name="q5_multichoice" value="dom"> DOM Manipulation</label> 
+                            <label><input type="checkbox" name="q5_multichoice" value="https"> HTTPS</label>
+                         </div>
+                     </div> 
+
+                     <div class="Button-group">
+                        <button type="submit" id="submitQuiz">Submit Quiz</button>
+                        <button type="button" id="resetQuiz" onclick="resetQuiz()">retake/Reset Quiz</button>
+                        </div>
+                    </form>
+
+                    <!--Results display-->
+                    <div id="results" style="display:none;">
+                        <h2>Quiz Results</h2>
+                        <!--Overall result-->
+                        <div id="overall-result"></div>
+                        <!--Total Score-->
+                        <p id="score-summary"></p>
+
+                        <!-- per question breakdown-->
+                         <div id="question-breakdown"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+
+        <footer>
+            <div class="container">
+                <p>IT 3203 Web Devolpment Project - Fall 2025</p>
+            </div>
+        </footer>
+
+        <script>
+            // define the correct answers and question properties
+            const quizData = [
+                {
+                    id: 'q1',
+                    type: 'fill-blank',
+                    question: '1. The component of a web browser responsible for displaying web content is called the ________.',
+                    correctAnswer: 'RENDERING ENGINE',
+                    correctDisplay: 'Rendering Engine'
+                },
+                {
+                    id: 'q2',
+                    type: 'multiple-choice',
+                    question: '2. What was the first graphical web browser that popularized the World Wide Web?',
+                    correctAnswer: 'b', // Mosaic
+                    correctDisplay: 'b. Mosaic'
+                },
+                {
+                    id: 'q3',
+                    type: 'multiple-choice',
+                    question: '3. Which company initially developed the JavaScript V8 Engine?',
+                    correctAnswer: 'd', // Google
+                    correctDisplay: 'd. Google'
+                },
+                {
+                    id: 'q4',
+                    type: 'multiple-choice',
+                    question: '4. Which of these browser wars took place in the late 1990s between Netscape Navigator and Internet Explorer?',
+                    correctAnswer: 'a', // The First Browser War
+                    correctDisplay: 'a. The First Browser War'
+                },
+                {
+                    id: 'q5',
+                    type: 'multi-select',
+                    question: '5. Select all of the following that are discussed as core Browser Security Features:',
+                    correctAnswer: ['sandboxing', 'same-origin', 'https'],
+                    correctDisplay: 'Sandboxing, Same-Origin Policy, HTTPS'
+                }
+            ];
+
+            const totalQuestions = quizData.length;
+            const form = document.getElementById('assessmentQuiz');
+            const resultsDiv = document.getElementById('results');
+            const overallResultDiv = document.getElementById('overall-result');
+            const scoreSummaryP = document.getElementById('score-summary');
+            const breakdownDiv = document.getElementById('question-breakdown');
+            const submitButton = document.getElementById('submitQuiz');
+            const passThreshold = 0.6; // 60% is passing
+
+            /**
+             * clears all user inputs and hides the results section.
+             */
+            function resetQuiz() {
+                // Clear form inputs
+                form.reset();
+
+                // Hide the results section
+                resultsDiv.style.display = 'none';
+
+                // Clear any inline color
+                const blocks = document.querySelectorAll('.question-block');
+                blocks.forEach(block => {
+                    block.style.borderColor = '';
+                });
+
+                console.log('Quiz reset successfully');
+            }
+
+            /**
+             * Calculates the quiz score and shows results
+             */
+            function calculateScore(event) {
+                event.preventDefault();
+
+                let score = 0;
+                breakdownDiv.innerHTML = '';
+
+                // Disable the submit button after submission
+                submitButton.disabled = true;
+                submitButton.textContent = 'Submitted!';
+
+                quizData.forEach(q => {
+                    let isCorrect = false;
+                    let userAnswer = '';
+                    const questionBlock = document.querySelector('[data-question-id="' + q.id + '"]');
+
+                    // Set default style: incorrect (red) if CSS var not set
+                    const incorrectColor = getComputedStyle(document.documentElement).getPropertyValue('--incorrect-color') || '#f66';
+                    const correctColor = getComputedStyle(document.documentElement).getPropertyValue('--correct-color') || '#6f6';
+                    if (questionBlock) questionBlock.style.borderColor = incorrectColor;
+
+                    if (q.type === 'fill-blank') {
+                        // Fill-in-the-blank logic
+                        const inputElement = document.getElementById(q.id + '_input');
+                        userAnswer = inputElement ? inputElement.value.trim() : '';
+                        if (userAnswer.toUpperCase() === q.correctAnswer.toUpperCase()) {
+                            isCorrect = true;
+                        }
+                    } else if (q.type === 'multiple-choice') {
+                        // Multiple choice logic
+                        const selected = form.elements[q.id + '_choice'];
+                        const selectedValue = selected ? selected.value : '';
+                        userAnswer = selectedValue;
+                        if (userAnswer === q.correctAnswer) {
+                            isCorrect = true;
+                        }
+                    } else if (q.type === 'multi-select') {
+                        // Multi-select logic
+                        const elements = form.elements[q.id + '_multichoice'];
+                        let selectedCheckboxes = [];
+                        if (elements) {
+                            if (elements.length !== undefined) {
+                                selectedCheckboxes = Array.from(elements).filter(cb => cb.checked).map(cb => cb.value);
+                            } else {
+                                if (elements.checked) selectedCheckboxes = [elements.value];
+                            }
+                        }
+                        userAnswer = selectedCheckboxes.join(',');
+                        const normalizedCorrect = q.correctAnswer.map(v => v.toLowerCase());
+                        const normalizedSelected = selectedCheckboxes.map(v => v.toLowerCase());
+                        if (selectedCheckboxes.length === normalizedCorrect.length &&
+                            normalizedCorrect.every(val => normalizedSelected.includes(val))) {
+                            isCorrect = true;
+                        }
+                    }
+
+                    if (isCorrect) {
+                        score++;
+                        if (questionBlock) questionBlock.style.borderColor = correctColor;
+                    }
+
+                    // append the result breakdown for the question
+                    breakdownDiv.innerHTML +=
+                        '<div class="question-result">' +
+                            '<p><strong>' + q.question + '</strong></p>' +
+                            '<p class="result-status ' + (isCorrect ? 'correct-status' : 'incorrect-status') + '">' +
+                                'Result: ' + (isCorrect ? 'Correct' : 'Incorrect') +
+                            '</p>' +
+                            '<p class="correct-answer">Correct answer: ' + q.correctDisplay + '</p>' +
+                            (q.type !== 'fill-blank' ? ('<p>Your Selection: ' + (userAnswer || 'No answer provided') + '</p>') : '') +
+                        '</div>';
+                });
+
+                // calculate final score and percentage
+                const percentage = (score / totalQuestions);
+                const overallPass = percentage >= passThreshold;
+
+                // Display results
+                overallResultDiv.textContent = overallPass ? 'PASS!' : 'FAIL';
+                overallResultDiv.className = overallPass ? 'pass' : 'fail';
+
+                scoreSummaryP.textContent = 'Total Score: ' + score + ' out of ' + totalQuestions + ' (' + (percentage * 100).toFixed(0) + '%)';
+
+                // show results section
+                resultsDiv.style.display = 'block';
+                resultsDiv.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            // attach the submit listener
+            form.addEventListener('submit', calculateScore);
+        </script>
+         </body>
+        </html>
+
+                        
+                            
+                        
+
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+              
